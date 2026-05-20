@@ -1,9 +1,11 @@
+name: sudoku-star
+
 services:
   sudoku:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: sudoku-game
+    container_name: sudoku-star
     ports:
       - "8080:80"
     restart: unless-stopped

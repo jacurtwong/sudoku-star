@@ -2,6 +2,12 @@
 
 一个基于 React + Vite 的数独小游戏，支持三档难度、计时计分、排行榜、数字高亮、每局 3 次提示机会，以及通关烟花效果。
 
+GitHub 仓库：
+
+```text
+https://github.com/jacurtwong/sudoku-star
+```
+
 ## 功能
 
 - 三档难度：轻松、进阶、大师
@@ -43,6 +49,13 @@ npm run build
 
 项目已包含 `Dockerfile`、`nginx.conf` 和 `docker-compose.yml`。部署时会先构建 Vite 静态文件，再用 Nginx 托管。
 
+从 GitHub 克隆：
+
+```bash
+git clone https://github.com/jacurtwong/sudoku-star.git
+cd sudoku-star
+```
+
 启动：
 
 ```bash
@@ -63,7 +76,13 @@ docker compose down
 
 ## 推送到 GitHub
 
-如果你已经安装并登录 GitHub CLI，可以用下面流程创建公开仓库并推送：
+本项目已发布到公开仓库：
+
+```text
+https://github.com/jacurtwong/sudoku-star
+```
+
+如果之后你要重新从本地创建另一个公开仓库，可以用下面流程：
 
 ```bash
 git init
