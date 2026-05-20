@@ -36,7 +36,7 @@ npm run dev
 默认访问：
 
 ```text
-http://127.0.0.1:5173
+http://127.0.0.1:8180
 ```
 
 局域网内其他设备访问时，把地址里的 `127.0.0.1` 换成这台机器的局域网 IP。
@@ -67,7 +67,7 @@ docker compose up --build -d
 访问：
 
 ```text
-http://localhost:8080
+http://localhost:8180
 ```
 
 局域网内其他设备访问时，把 `localhost` 换成部署机器的局域网 IP。

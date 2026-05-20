@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: sudoku-star
     ports:
-      - "8080:3000"
+      - "8180:3000"
     volumes:
       - sudoku-star-data:/app/data
     restart: unless-stopped
