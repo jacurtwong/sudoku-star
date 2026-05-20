@@ -5,5 +5,10 @@ services:
     image: jacurtwongapp/sudoku-star:latest
     container_name: sudoku-star
     ports:
-      - "8080:80"
-    restart: unless-stopped
+      - "8180:3000"
+    volumes:
+      - sudoku-star-data:/app/data
+    restart: always
+
+volumes:
+  sudoku-star-data:

@@ -1,6 +1,7 @@
 node_modules
 dist
 qa
+data
 .git
 .gitignore
 npm-debug.log

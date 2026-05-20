@@ -49,7 +49,7 @@ npm run build
 
 ## Docker Compose 部署
 
-项目已包含 `Dockerfile`、`nginx.conf` 和 `docker-compose.yml`。部署时会先构建 Vite 静态文件，再用 Nginx 托管。
+项目已包含 `Dockerfile` 和 `docker-compose.yml`。部署时会先构建 Vite 静态文件，再用 Node 服务托管页面和排行榜 API。
 
 从 GitHub 克隆：
 
@@ -71,6 +71,8 @@ http://localhost:8080
 ```
 
 局域网内其他设备访问时，把 `localhost` 换成部署机器的局域网 IP。
+
+排行榜数据会写入 Docker volume `sudoku-star-data`，容器重建或更新镜像后仍会保留。
 
 停止：
 
@@ -98,12 +100,20 @@ jacurtwongapp/sudoku-star:latest
 docker compose -f docker-compose.image.yml up -d
 ```
 
+镜像版 compose 默认映射端口为 `8180:3000`，访问：
+
+```text
+http://飞牛NAS的IP:8180
+```
+
 更新镜像：
 
 ```bash
 docker compose -f docker-compose.image.yml pull
 docker compose -f docker-compose.image.yml up -d
 ```
+
+镜像版 compose 同样使用 Docker volume `sudoku-star-data` 持久化排行榜。
 
 ## 推送到 GitHub
 

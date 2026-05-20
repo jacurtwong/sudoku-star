@@ -59,8 +59,28 @@ function loadLeaderboard() {
   }
 }
 
-function saveLeaderboard(board) {
-  localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(board));
+function saveLeaderboardLocal(board) {
+  try {
+    localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(board));
+  } catch {
+    // Browsers can block storage in private contexts; server persistence still works in production.
+  }
+}
+
+async function fetchLeaderboard() {
+  const response = await fetch("/api/leaderboard", { cache: "no-store" });
+  if (!response.ok) throw new Error("Leaderboard API unavailable");
+  return response.json();
+}
+
+async function saveLeaderboardRemote(board) {
+  const response = await fetch("/api/leaderboard", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(board),
+  });
+  if (!response.ok) throw new Error("Leaderboard API unavailable");
+  return response.json();
 }
 
 function Fireworks({ active }) {
@@ -322,6 +342,22 @@ export default function App() {
 
   const score = scoreGame(difficulty, seconds, mistakes);
 
+  useEffect(() => {
+    let cancelled = false;
+    fetchLeaderboard()
+      .then((remoteBoard) => {
+        if (cancelled) return;
+        setLeaderboard(remoteBoard);
+        saveLeaderboardLocal(remoteBoard);
+      })
+      .catch(() => {
+        // Vite dev mode has no API server; keep the local fallback for development.
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const startGame = useCallback(
     (nextDifficulty = difficulty) => {
       setDifficulty(nextDifficulty);
@@ -415,7 +451,10 @@ export default function App() {
       .slice(0, 5);
     next[difficulty] = row;
     setLeaderboard(next);
-    saveLeaderboard(next);
+    saveLeaderboardLocal(next);
+    saveLeaderboardRemote(next).catch(() => {
+      saveLeaderboardLocal(next);
+    });
     setSaved(true);
     window.setTimeout(() => startGame(difficulty), 700);
   };

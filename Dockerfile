@@ -8,11 +8,19 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-FROM nginx:1.29-alpine
+FROM node:24-alpine
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /app/dist /usr/share/nginx/html
+WORKDIR /app
 
-EXPOSE 80
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV DATA_DIR=/app/data
 
-CMD ["nginx", "-g", "daemon off;"]
+COPY server.js ./
+COPY package.json ./
+COPY --from=build /app/dist ./dist
+
+VOLUME ["/app/data"]
+EXPOSE 3000
+
+CMD ["node", "server.js"]
