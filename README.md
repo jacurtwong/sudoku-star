@@ -78,6 +78,33 @@ http://localhost:8080
 docker compose down
 ```
 
+## 推送镜像到 Docker Hub
+
+Windows 下一键构建并推送多架构镜像：
+
+```powershell
+.\push-dockerhub.bat
+```
+
+脚本会推送到：
+
+```text
+jacurtwongapp/sudoku-star:latest
+```
+
+飞牛 NAS 如果不想在 NAS 上构建源码，可以使用镜像版 compose：
+
+```bash
+docker compose -f docker-compose.image.yml up -d
+```
+
+更新镜像：
+
+```bash
+docker compose -f docker-compose.image.yml pull
+docker compose -f docker-compose.image.yml up -d
+```
+
 ## 推送到 GitHub
 
 本项目已发布到公开仓库：

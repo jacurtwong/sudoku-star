@@ -1,0 +1,9 @@
+name: sudoku-star
+
+services:
+  sudoku:
+    image: jacurtwongapp/sudoku-star:latest
+    container_name: sudoku-star
+    ports:
+      - "8080:80"
+    restart: unless-stopped
